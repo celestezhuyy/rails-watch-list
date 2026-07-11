@@ -1,0 +1,6 @@
+<%= simple_form_for bookmark do |f| %>
+  <%= f.input :comment %>
+  <%= f.association :movies %>
+  <%= f.association :lists %>
+  <%= f.submit %>
+<% end %>
