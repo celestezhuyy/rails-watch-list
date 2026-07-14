@@ -32,7 +32,7 @@
           <% end %>
           <div class="d-flex gap-1">
             <%= link_to "My lists", root_path, class: "btn btn-light" %>
-            <%= link_to "New list", new_list_path, class: "btn btn-light" %>
+            <%= render "lists/form", list: @list %>
           </div>
         </div>
       </nav>

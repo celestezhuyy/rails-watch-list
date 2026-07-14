@@ -1,7 +1,29 @@
-<div class="card shadow-sm p-3">
-  <%= simple_form_for list do |f| %>
-    <%= f.input :name %>
-    <%= f.association :movies %>
-    <%= f.submit class:"btn btn-primary"%>
-  <% end %>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add a New List
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title fs-5" id="exampleModalLabel">Add a New Movie List</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= simple_form_for list do |f| %>
+        <div class="modal-body">
+          <%= f.input :name %>
+          <%= f.input :photo, as: :file %>
+          <%= f.simple_fields_for :bookmarks do |bookmark_form| %>
+            <%= bookmark_form.association :movie %>
+            <%= bookmark_form.input :comment %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <%= f.submit class:"btn btn-primary"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

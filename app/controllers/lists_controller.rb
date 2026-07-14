@@ -1,6 +1,8 @@
 class ListsController < ApplicationController
   def index
     @lists = List.all
+    @list = List.new
+    @list.bookmarks.build
   end
 
   def show
@@ -11,6 +13,7 @@ class ListsController < ApplicationController
 
   def new
     @list = List.new
+    @list.bookmarks.build
   end
 
   def create
@@ -25,6 +28,6 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.expect(list: [:name])
+    params.expect(list: [:name, :photo, bookmarks_attributes: [:movie_id, :comment]])
   end
 end
