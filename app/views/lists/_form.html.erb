@@ -1,5 +1,7 @@
-<%= simple_form_for list do |f| %>
-  <%= f.input :name %>
-  <%= f.association :movies %>
-  <%= f.submit %>
-<% end %>
+<div class="card shadow-sm p-3">
+  <%= simple_form_for list do |f| %>
+    <%= f.input :name %>
+    <%= f.association :movies %>
+    <%= f.submit class:"btn btn-primary"%>
+  <% end %>
+</div>

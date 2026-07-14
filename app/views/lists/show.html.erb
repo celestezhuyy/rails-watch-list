@@ -1,14 +1,42 @@
 <div>
-  <h1><%= @list.name %></h1>
-  <%= link_to "add a movie", new_list_bookmark_path(@list) %>
-  <div>
-    <% @movies.each do |movie| %>
+  <div class="banner mb-3" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
+    <div class="container text-center">
+      <h1><%= @list.name.titleize %> Movies</h1>
+    </div>
+  </div>
+  <div class="w-75 m-auto">
+    <div class="text-end">
+      <%= link_to "add a movie", list_path(@list, anchor: "add-bookmark"), class: "btn btn-success mb-3" %>
+    </div>
+    <h2 class="mt-3 mb-3">All My Bookmarks of <%= @list.name.titleize %> Movies</h2>
+    <div class="movie-cards">
+      <% if @movies.any? %>
+        <% @movies.each do |movie| %>
+          <div class="card-movie">
+            <%= image_tag movie.poster_url, alt: movie.title, class: "w-100" %>
+            <div class="p-3">
+              <div class="d-flex align-items-center justify-content-start">
+                <p class="fs-4"><strong><%= movie.title %></strong> </p>
+                <p> · <%= movie.rating %> ⭐️</p>
+              </div>
+              <%= movie.overview %>
+              <div class="d-flex justify-content-between mt-4">
+                <% bookmark = movie.bookmarks.find_by(list: @list) %>
+                <p class="fs-5 fw-bold"><i class="fa-solid fa-quote-left"> </i> <%= bookmark[:comment] %></p>
+                <%= link_to "delete", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "link-danger link-underline-opacity-0 link-underline-opacity-100-hover" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No movies yet. Add your first one!</p>
+      <% end %>
+    </div>
+    <div id="add-bookmark" class="mt-5">
+      <h2>Create a New Bookmark</h2>
+      <div class="card shadow-sm p-3">
+        <%= render "bookmarks/form", bookmark: @bookmark, list: @list %>
       </div>
-        <%= movie.title %> <%= movie.rating %>
-        <%= movie.overview %>
-        <%= movie.bookmarks.first[:comment] %>
-        <%= link_to "delete", bookmark_path(movie), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-      <div>
-    <% end %>
+    </div>
   </div>
 </div>
