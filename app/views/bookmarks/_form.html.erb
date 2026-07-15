@@ -1,5 +1,7 @@
-<%= simple_form_for [list, bookmark], url: list_bookmarks_path(list, anchor: "add-bookmark") do |f| %>
-  <%= f.input :comment %>
-  <%= f.association :movie %>
-  <%= f.submit class: "btn btn-primary" %>
-<% end %>
+<div id="new_bookmark_form_wrapper">
+  <%= simple_form_for [list, bookmark], html: { novalidate: true } do |f| %>
+    <%= f.input :comment %>
+    <%= f.association :movie %>
+    <%= f.submit class: "btn btn-primary" %>
+  <% end %>
+</div>

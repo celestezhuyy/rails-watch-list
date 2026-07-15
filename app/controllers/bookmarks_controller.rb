@@ -8,10 +8,13 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.new(bookmark_params)
     @bookmark.list = @list
     if @bookmark.save
-      redirect_to list_path(@list, anchor: "add-bookmark")
+      redirect_to list_path(@list)
     else
-      @movies = @list.movies
-      render "lists/show", status: :unprocessable_entity
+      render turbo_stream: turbo_stream.replace(
+        "new_bookmark_form_wrapper",
+        partial: "bookmarks/form",
+        locals: { list: @list, bookmark: @bookmark }
+      ), status: :unprocessable_entity
     end
   end
 

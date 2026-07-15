@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_list
-    @list = List.new
-    @list.bookmarks.build
+    @new_list = List.new
+    @new_list.bookmarks.build
   end
 end
