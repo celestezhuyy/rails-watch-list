@@ -1,4 +1,4 @@
-<%= simple_form_for [list, bookmark] do |f| %>
+<%= simple_form_for [list, bookmark], url: list_bookmarks_path(list, anchor: "add-bookmark") do |f| %>
   <%= f.input :comment %>
   <%= f.association :movie %>
   <%= f.submit class: "btn btn-primary" %>
