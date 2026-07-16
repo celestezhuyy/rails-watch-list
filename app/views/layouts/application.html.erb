@@ -46,15 +46,16 @@
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
           </div>
-          <div class="footer-copyright">
+          <div class="pe-5">
             <p>My Movie Lists</p>
             <% if @lists %>
               <ul>
-                <% @lists.each do |list| %>
-                  <li><%= link_to list.name.titleize, list_path(list) %></li>
+                <% @lists.first(3).each do |list| %>
+                  <li><%= link_to list.name.titleize, list_path(list), class: "primary-link link-underline link-underline-opacity-0" %></li>
                 <% end %>
               </ul>
             <% end %>
+            <%= link_to "More Lists ...", root_path, class: "primary-link link-underline link-underline-opacity-0" %>
           </div>
         </div>
       </footer>

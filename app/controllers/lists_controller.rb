@@ -1,4 +1,6 @@
 class ListsController < ApplicationController
+  before_action :set_list, only: [:show, :destroy]
+
   def index
     @lists = List.all
     @new_list = List.new
@@ -6,7 +8,6 @@ class ListsController < ApplicationController
   end
 
   def show
-    @list = List.find(params[:id])
     @movies = @list.movies
     @bookmark = Bookmark.new
   end
@@ -25,13 +26,22 @@ class ListsController < ApplicationController
         "modal_new_list",
         partial: "lists/form_content",
         locals: { list: @new_list }
-      ), status: :unprocessable_entity
+        ), status: :unprocessable_entity
+      end
     end
-  end
 
-  private
+    def destroy
+      @list.destroy
+      redirect_to root_path, status: :see_other
+    end
 
-  def list_params
-    params.expect(list: [:name, :photo, bookmarks_attributes: [[:id, :movie_id, :comment, :_destroy]]])
-  end
+    private
+
+    def list_params
+      params.expect(list: [:name, :photo, bookmarks_attributes: [[:id, :movie_id, :comment, :_destroy]]])
+    end
+
+    def set_list
+      @list = List.find(params[:id])
+    end
 end
