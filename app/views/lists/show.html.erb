@@ -8,6 +8,19 @@
   <div class="w-75 m-auto">
     <div class="text-end">
       <%= link_to "Add a Movie", list_path(@list, anchor: "add-bookmark"), class: "btn btn-success mb-3" %>
+      <button type="button"
+              class="btn btn-secondary mb-3"
+              data-bs-toggle="modal"
+              data-bs-target="#editListModal">
+        Edit This List
+      </button>
+      <div class="modal fade" id="editListModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <%= render "lists/form_content", list: @list %>
+          </div>
+        </div>
+      </div>
       <%= link_to "Delete This List", list_path(@list), class: "btn btn-warning mb-3",
       data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
     </div>
@@ -31,9 +44,9 @@
                   View More
                 </button>
               </div>
-              <div class="d-flex justify-content-between align-items-end mt-4">
+              <div class="d-flex justify-content-between align-items-end mt-4 mb-3">
                 <% bookmark = movie.bookmarks.find_by(list: @list) %>
-                <p class="movie-overview fs-5 fw-bold mb-0"><i class="fa-solid fa-quote-left"> </i> <%= bookmark[:comment] %></p>
+                <p class="movie-overview fs-5 fw-bold mb-0 text-break"><i class="fa-solid fa-quote-left"> </i> <%= bookmark[:comment] %></p>
                 <%= link_to "delete", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "link-danger link-underline-opacity-0 link-underline-opacity-100-hover" %>
               </div>
               <%= render "movie_modal", movie: movie, bookmark: bookmark %>

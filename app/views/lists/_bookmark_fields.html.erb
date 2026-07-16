@@ -1,0 +1,32 @@
+<p>Bookmarks</p>
+<div data-controller="nested-form">
+  <template data-nested-form-target="template">
+    <%= f.simple_fields_for :bookmarks, Bookmark.new, child_index: 'NEW_RECORD' do |bookmark_form| %>
+      <div class="nested-fields mb-3 p-3 border rounded bg-light" data-new-record="true">
+        <%= bookmark_form.association :movie %>
+        <%= bookmark_form.input :comment %>
+        <button type="button" class="btn btn-sm btn-outline-danger mt-2" data-action="click->nested-form#remove">
+          <i class="fa-solid fa-trash"></i> Remove
+        </button>
+      </div>
+    <% end %>
+  </template>
+  <div data-nested-form-target="target">
+    <%= f.simple_fields_for :bookmarks do |bookmark_form| %>
+      <div class="nested-fields mb-3 p-3 border rounded bg-light" data-new-record="<%= bookmark_form.object.new_record? %>">
+        <%= bookmark_form.association :movie %>
+        <%= bookmark_form.input :comment %>
+
+        <%# Hidden input to handle deletions for existing records if you use this on an edit page %>
+        <%= bookmark_form.hidden_field :_destroy %>
+
+        <button type="button" class="btn btn-sm btn-outline-danger mt-2" data-action="click->nested-form#remove">
+          <i class="fa-solid fa-trash"></i> Remove
+        </button>
+      </div>
+    <% end %>
+  </div>
+  <button type="button" class="btn btn-sm btn-secondary mb-3" data-action="click->nested-form#add">
+    <i class="fa-solid fa-plus"></i> Add another movie bookmark
+  </button>
+</div>
