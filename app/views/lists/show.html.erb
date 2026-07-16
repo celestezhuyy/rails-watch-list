@@ -15,7 +15,7 @@
     <div class="movie-cards horizontal-cards d-flex overflow-x-auto overflow-y-hidden gap-3">
       <% if @movies.any? %>
         <% @movies.each do |movie| %>
-          <div class="card-movie m-2 flex-shrink-0 d-flex flex-column" style="width: 280px; height: 640px">
+          <div class="card-movie m-2 flex-shrink-0 d-flex flex-column" style="width: 280px; height: 656px">
             <%= image_tag movie.poster_url, alt: movie.title, class: "w-100 object-fit-cover", style: "height: 320px" %>
             <div class="flex-grow-1 d-flex flex-column justify-content-between p-3">
               <div>
@@ -24,12 +24,19 @@
                   <p class="text-nowrap mb-0 ms-2"> · <%= movie.rating %> ⭐️</p>
                 </div>
                 <div class="movie-overview"><%= movie.overview %></div>
+                <button type="button"
+                        class="btn btn-outline-primary btn-sm mt-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#movieModal-<%= movie.id %>">
+                  View More
+                </button>
               </div>
               <div class="d-flex justify-content-between align-items-end mt-4">
                 <% bookmark = movie.bookmarks.find_by(list: @list) %>
-                <p class="movie-overview fs-5 fw-bold"><i class="fa-solid fa-quote-left"> </i> <%= bookmark[:comment] %></p>
+                <p class="movie-overview fs-5 fw-bold mb-0"><i class="fa-solid fa-quote-left"> </i> <%= bookmark[:comment] %></p>
                 <%= link_to "delete", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "link-danger link-underline-opacity-0 link-underline-opacity-100-hover" %>
               </div>
+              <%= render "movie_modal", movie: movie, bookmark: bookmark %>
             </div>
           </div>
         <% end %>
