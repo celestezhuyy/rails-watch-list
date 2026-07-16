@@ -8,6 +8,7 @@ document.addEventListener("turbo:load", () => {
   console.log("turbo")
   document.querySelectorAll(".horizontal-cards").forEach((container) => {
     container.addEventListener("wheel", (e) => {
+      if (e.target.closest(".movie-overview")) return;
       e.preventDefault();
       container.scrollLeft += e.deltaY;
     });
